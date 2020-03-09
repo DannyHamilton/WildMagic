@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+	<!-- Bootstrap JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</head>
+<body>
+
+	<style>
+
+		@media only screen and (max-width: 768px) {
+			#startButton {
+	            height: 100px;
+	            margin-top: 100px;
+	            font-size: 50px;
+	        }
+
+	        #notTriggered {
+				margin-top: 20px;
+				min-height: 100px;
+				font-size: 50px;
+			}
+
+			#casterAlert {
+				margin-top: 10px;
+				min-height: 100px;
+				font-size: 30px;
+			}
+		}
+
+		@media only screen and (min-width: 769px) {
+			#startButton {
+	            height: 100px;
+	            margin-top: 100px;
+	            font-size: 50px;
+	        }
+
+	        #notTriggered {
+				margin-top: 20px;
+				min-height: 100px;
+				font-size: 50px;
+			}
+
+			#casterAlert {
+				margin-top: 10px;
+				min-height: 100px;
+				font-size: 30px;
+			}
+		}
+	        
+
+
+
+	</style>
+
+<div class="container">
+
+	<div class="row">
+
+		<div class="col-xs-12 col-md-4 col-md-offset-4">
+
+			<button type="button" class="btn btn-info col-xs-12" id="startButton" onclick="start()">Surge Check</button>
+
+		</div>
+		
+	</div>
+
+	<div class="row">
+
+		<div class="col-xs-12 col-md-4 col-md-offset-4">
+
+			<div class="alert alert-info col-xs-12" role="alert" id="notTriggered">Surge has not triggered</div>
+
+		</div>
+
+	</div>
+
+	<div class="row">
+
+		<div class="col-xs-12 col-md-4 col-md-offset-4">
+
+			<div class="alert alert-info col-xs-12" role="alert" id="casterAlert"></div>
+
+		</div>
+
+	</div>
+
+</div>
+
+
+
+<script>
+
+	document.getElementById('notTriggered').style.display = 'none';
+	document.getElementById('casterAlert').style.display = 'none';
+
+	var randomStrings = [
+		"Caster rolls on this table at the start of caster's turn for the next minute. Ignore this result on subsequent rolls.",
+		"Caster and target switch positions after spell",
+		"For the next minute caster can see any invisible creature if you have line of sight to it.",
+		"A flaming horse appears (Not Nightmare. A real horse on fire)",
+		"A modron chosen and controlled by the DM appears in an unoccupied space within 5 feet of caster then disappears 1 minute later.",
+		"Cast (1 action type) plant growth centered on self",
+		"Cast fireball at 3rd level centered on self (20 foot radius; 8d6 fire; DEX save for half)",
+		"Weapons within a 60 foot radius of target turn to food for 1 minute",
+		"Cast magic missile as 5th-level spell",
+		"Caster breathes 30 foot fire cone next time they speak",
+		"Roll a d10. Caster's height changes by a number of inches equal to the roll. If the roll is odd caster shrinks. If the roll is even caster grows.",
+		"Target is cocooned in crystal until someone breaks it (AC: 13;  HP: 4+1d8)",
+		"Cast confusion centered on self. If triggered by a concentration spell then effect continues so long as concentration is maintained on triggering spell",
+		"Cast thunder wave",
+		"For the next minute caster regains 5 hit points at the start of each of your turns.",
+		"Target is transported to the Astral Plane for 1 minute after which time it returns to the space it previously occupied or the nearest unoccupied space if that space is occupied",
+		"Caster grows a long beard made of feathers that remains until player sneezes at which point the feathers explode out from character's face.",
+		"A swarm of rats carry caster 30 feet in random direction",
+		"Cast grease centered on self",
+		"Creatures within 30 feet of caster are stuck in place vs Str DC 15",
+		"Creatures have disadvantage on saving throws against caster's next spell in the next minute that involves a saving throw.",
+		"A mature oak sprouts in a random unoccupied space within 60 feet of caster",
+		"Caster's skin turns a vibrant shade of blue. A Remove Curse spell can end this effect.",
+		"Caster can only speak to animals for 24 hours",
+		"An eye appears on caster's forehead for the next minute. During that time caster has advantage on Wisdom (Perception) checks that rely on sight.",
+		"For the next minute caster gains 100 lbs and move speed is halved.",
+		"For the next minute all caster's spells with a casting time of 1 action have a casting time of 1 bonus action.",
+		"Next turn caster takes no action. Instead vomits 1d100 Silver Pieces",
+		"Caster teleports up to 60 feet to an unoccupied space of caster's choice that caster can see.",
+		"Caster’s hands become covered in sticky goop for 1 minute. Cannot use weapons. Cannot cast spells with somatic components.",
+		"Caster is transported to the Astral Plane until the end of caster's next turn after which time caster returns to the space previously occupied or the nearest unoccupied space if that space is occupied.",
+		"Cabbages sprout abundantly within a 30 foot radius of caster.",
+		"Maximize the damage of the next damaging spell caster casts within the next minute.",
+		"Caster can mimic target’s voice perfectly for 24 hrs",
+		"Roll a d10. Caster's age changes by a number of years equal to the roll. If the roll is odd caster gets younger (minimum 1 year old). If the roll is even caster gets older",
+		"Caster grows antlers. Sheds them in 24 hours",
+		"1d6 flumphs controlled by the DM appear in unoccupied spaces within 60 feet of caster and are frightened of caster. They vanish after 1 minute.",
+		"Caster and target are both repelled 10’ in opposite directions (CON save to stay put).",
+		"Regain 2d10 HP",
+		"Gravity reverses within a sphere of 30’ radius of target until start of next turn",
+		"Caster turns into a potted plant until the start of next turn. While a plant caster is incapacitated and has vulnerability to all damage. If caster drops to 0 hit points pot breaks and caster's form reverts.",
+		"Caster distracted by cloud of gnats for next minute. CON 10 save to maintain concentration or cast a spell in any single round.",
+		"For the next minute caster can teleport up to 20 feet as a bonus action on each of caster's turns.",
+		"Spell ricochets off target to random target within 30 feet of target. If no other targets in range spell fails",
+		"Cast levitate on self",
+		"Caster’s money cycles: CP -> SP -> GP -> CP",
+		"A unicorn controlled by the DM appears in a space within 5 feet of caster. It disappears 1 minute later.",
+		"If target has eyes one of target’s eyes replaced by 500 GP sapphire",
+		"Caster can't speak for the next minute. On any attempt pink bubbles float out of caster's mouth. Cannot cast any spell with verbal component",
+		"Caster cannot hear for the next minute. Smoke fumes from caster's ears.",
+		"A spectral shield hovers near caster for the next minute. Grants caster a +2 bonus to AC and immunity to Magic Missile.",
+		"Caster gains 3 foot prehensile tail for 1 hour",
+		"Caster is immune to being intoxicated by alcohol for the next 5d6 days.",
+		"All unlocked doors/windows within 60 feet of caster fly open. All open doors/windows within 60 feet of caster slam shut.",
+		"Caster's hair falls out but grows back within 24 hours.",
+		"Caster’s face blackened by small explosion (see bugs bunny exploding cigar)",
+		"For the next minute any flammable object caster touchs that isn't being worn or carried by another creature bursts into flame.",
+		"Geyser lifts caster 50 feet in air until start of next turn. Gently returns caster back to the ground.",
+		"Caster regains lowest-level expended spell slot.",
+		"A confused bear appears in a random unoccupied location within 60 feet of caster. It dissapears after 1 minute",
+		"For the next minute caster must shout when speaking.",
+		"Grass instantly sprouts to 3 feet tall within a 20 foot radius of caster. It returns to original length after 1 minute.",
+		"Cast Fog Cloud centered on self",
+		"Caster can only breathe underwater for next minute. Cannot cast any spell with verbal component unless mouth is under water. Caster is aware of the need for water.",
+		"Up to three creatures choosen by caster within 30 feet of caster take 4d10 lightning damage.",
+		"Caster falls unconscious until start of next turn",
+		"Caster is frightened (see Frightened condition) by the nearest creature until the end of next turn.",
+		"If target is a creature and dies in next minute its ghost haunts caster for 3d10 days.",
+		"Each creature within 30 feet of caster becomes invisible for the next minute. The invisibility ends on a creature when it attacks or casts a spell.",
+		"Everyone within a 60 foot radius of caster drops everything they are holding ( WIS 15 save to avoid dropping)",
+		"Caster gains resistance to all damage for the next minute.",
+		"Everything within 20 feet of caster is pulled 10 feet toward caster.  Caster takes 1 HP damage from each object/creature that collides with him. Creatures can make STR save to avoid moving.",
+		"A random creature within 60 feet of caster becomes poisoned (see Poisoned condition) for 1d4 hours.",
+		"Caster smells like lavender for 1d6 days",
+		"Caster glows with bright light in a 30-foot radius for the next minute. Any creature that ends its turn within 5 feet of caster is blinded (See Blinded condition) until the end of its next turn.",
+		"Caster's clothes become uncomfortably tight. Spell casting with somatic components is not possible until clothing is removed or replaced.",
+		"Cast Polymorph on self. If caster fails the saving throw caster turns into a goat for the spell's duration.",
+		"If spell would kill target target’s extremities fly apart",
+		"Illusory butterflies and flower petals flutter in the air within 10 feet of caster for the next minute",
+		"Caster is trapped in a giant glass ball (AC: 15; HP: 5 + 1d10). Line of sight is not stopped. Line of effect is.",
+		"Caster can take one additional action immediately.",
+		"Caster’s fists become huge. Deal 1d8 bludgeoning damage for 1 minute.",
+		"Each creature within 30 feet of caster takes 1d10 necrotic damage. Caster regain hit points equal to the sum of the necrotic damage dealt.",
+		"Loud voice ridicules caster for 1 min. (Concentration checks are required. Each spell casing attempt requires CON 10 save to cast).",
+		"Cast mirror image",
+		"Caster's arms become tentacles for 1 minute",
+		"Cast Fly on a random creature within 60 feet of caster.",
+		"Large floating eye follows caster for 1 hour",
+		"Caster becomes invisible for the next minute. During that time other creatures can't hear caster. The invisibility ends if caster attacks or casts a spell.",
+		"Caster INT and STR swap for 1 hour",
+		"If caster dies within the next minute caster immediately comes back to life as if by the Reincarnate spell",
+		"Caster sees everyone as a decaying corpse for 24h",
+		"Caster's size increases by one size category for the next minute.",
+		"All light sources within a 60 foot radius of target are extinguished",
+		"Caster and all creatures within 30 feet of caster gain vulnerability to piercing damage for the next minute.",
+		"Caster become frightened (See Frightened condition) of a color for 1 hour. (1d6 for color. 1:red; 2:orange; 3:yellow; 4:green; 5:blue; 6:purple)",
+		"Caster is surrounded by faint ethereal music for the next minute.",
+		"Caster suffers a head cold for 24 hours (gains both Poisoned condition and one level of Exhaustion)",
+		"Regain all expended Sorcery Points",
+		"Lose all unexpended Sorcery Points",
+	];
+
+	function start() {
+		console.log("start() is running");
+		var initialNumber = Math.floor(Math.random() * 100) + 1;
+		console.log("initialNumber: ", initialNumber);
+		if (initialNumber > 25) {
+			console.log("initialNumber > 25");
+			document.getElementById('casterAlert').style.display = 'none';
+			document.getElementById('notTriggered').style.display = 'block';
+		}
+		if (initialNumber <= 25) {
+			console.log("initialNumber < 25");
+			document.getElementById('notTriggered').style.display = 'none';
+			partTwo();
+		}
+	}
+	
+	function partTwo() {
+		console.log("partTwo() is running");
+		//console.log("randomStrings[5]: ", randomStrings[5]);
+
+		// here...
+		var number = Math.floor(Math.random() * 100);
+		console.log("number: ", number);
+		console.log("randomStrings[number]: ", randomStrings[number]);
+		var message = randomStrings[number];
+		console.log("message: ", message);
+		document.getElementById('casterAlert').style.display = 'block';
+		document.getElementById("casterAlert").innerHTML = message;
+	}
+
+
+	
+</script>
+
+</body>
+</html>
