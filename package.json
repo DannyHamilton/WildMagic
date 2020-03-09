@@ -6,13 +6,13 @@
   "author": "",
   "license": "",
   "dependencies": {
-    "async": "^2.3.0",
-    "ejs": "^2.5.6",
+    "async": "^2.6.3",
+    "ejs": "^2.7.4",
     "good": "^7.1.0",
     "good-console": "^6.4.0",
-    "hapi": "^16.7.0",
+    "hapi": "^18.1.0",
     "inert": "^4.1.0",
-    "mysql": "^2.16.0",
+    "mysql": "^2.18.1",
     "vision": "^4.1.1"
   }
 }
