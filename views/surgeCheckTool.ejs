@@ -18,12 +18,27 @@
 
 		@media only screen and (max-width: 768px) {
 			#startButton {
-	            height: 100px;
-	            margin-top: 100px;
-	            font-size: 50px;
-	        }
-
-	        #notTriggered {
+ 				height: 100px;
+ 				margin-top: 100px;
+ 				display: inline-block;
+ 				padding: 15px 25px;
+ 				font-size: 50px;
+ 				cursor: pointer;
+ 				text-align: center;
+ 				text-decoration: none;
+ 				outline: none;
+ 				color: #fff;
+ 				background-color: #4CAF50;
+ 				border: none;
+ 				border-radius: 15px;
+ 				box-shadow: 0 9px #999;
+ 		        }
+ 			#startButton:active {
+   				background-color: #3e8e41;
+   				box-shadow: 0 5px #666;
+   				transform: translateY(4px);
+ 			}
+			#notTriggered {
 				margin-top: 20px;
 				min-height: 100px;
 				font-size: 50px;
@@ -38,12 +53,27 @@
 
 		@media only screen and (min-width: 769px) {
 			#startButton {
-	            height: 100px;
-	            margin-top: 100px;
-	            font-size: 50px;
-	        }
-
-	        #notTriggered {
+				height: 100px;
+				margin-top: 100px;
+				display: inline-block;
+				padding: 15px 25px;
+				font-size: 50px;
+				cursor: pointer;
+				text-align: center;
+				text-decoration: none;
+				outline: none;
+				color: #fff;
+				background-color: #4CAF50;
+				border: none;
+				border-radius: 15px;
+				box-shadow: 0 9px #999;
+ 			}
+ 			#startButton:active {
+   				background-color: #3e8e41;
+   				box-shadow: 0 5px #666;
+   				transform: translateY(4px);
+ 			}
+ 		        #notTriggered {
 				margin-top: 20px;
 				min-height: 100px;
 				font-size: 50px;
@@ -67,7 +97,7 @@
 
 		<div class="col-xs-12 col-md-4 col-md-offset-4">
 
-			<button type="button" class="btn btn-info col-xs-12" id="startButton" onclick="start()">Surge Check</button>
+			<button type="button" class="btn btn-info col-xs-12" id="startButton" onmousedown="clearMsg()" ontouch="clearMsg()"  onclick="start()">Surge Check</button>
 
 		</div>
 		
@@ -212,16 +242,17 @@
 		if (initialNumber > 25) {
 			console.log("initialNumber > 25");
 			document.getElementById('casterAlert').style.display = 'none';
+			document.getElementById("notTriggered").innerHTML = initialNumber + ": " + "Surge has not triggered";
 			document.getElementById('notTriggered').style.display = 'block';
 		}
 		if (initialNumber <= 25) {
 			console.log("initialNumber < 25");
 			document.getElementById('notTriggered').style.display = 'none';
-			partTwo();
+			partTwo(initialNumber);
 		}
 	}
 	
-	function partTwo() {
+	function partTwo(initialNumber) {
 		console.log("partTwo() is running");
 		//console.log("randomStrings[5]: ", randomStrings[5]);
 
@@ -229,12 +260,17 @@
 		var number = Math.floor(Math.random() * 100);
 		console.log("number: ", number);
 		console.log("randomStrings[number]: ", randomStrings[number]);
-		var message = randomStrings[number];
+		var message = initialNumber + ":" + number + ": " + randomStrings[number];
 		console.log("message: ", message);
 		document.getElementById('casterAlert').style.display = 'block';
 		document.getElementById("casterAlert").innerHTML = message;
 	}
 
+ 	function clearMsg() {
+ 		document.getElementById('notTriggered').style.display = 'none';
+ 		document.getElementById('casterAlert').style.display = 'block';
+ 		document.getElementById("casterAlert").innerHTML = "";
+ 	}
 
 	
 </script>
