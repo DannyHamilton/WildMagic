@@ -6,7 +6,7 @@
   "author": "",
   "license": "",
   "dependencies": {
-    "async": "^2.3.3",
+    "async": "^2.6.4",
     "ejs": "^2.5.6",
     "good": "^7.1.0",
     "good-console": "^6.4.0",
